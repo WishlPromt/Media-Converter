@@ -8,19 +8,19 @@ def main(scale: list = [512, 512],
          ss: str = "00:00:00",
          to: str = "00:00:03"):
 
-    for file in os.listdir("media/inputs/"):
+    for file in os.listdir("../media/inputs/"):
         if file == '.gitkeep': continue
 
         print(file.split('.')[0])
         try:
-            input = ffmpeg.input(f"media/inputs/{file}",
+            input = ffmpeg.input(f"../media/inputs/{file}",
                                  ss=ss,
                                  to=to,
                                  )
 
             output = (input
                       .filter("scale", scale[0], -1)
-                      .output(f"media/{output_folder}/{file.split('.')[0]}.webm",
+                      .output(f"../media/{output_folder}/{file.split('.')[0]}.webm",
                               r=framerate,
                               vcodec=codec,
                               **{
