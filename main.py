@@ -9,6 +9,8 @@ def main(scale: list = [512, 512],
          to: str = "00:00:03"):
 
     for file in os.listdir("media/inputs/"):
+        if file == '.gitkeep': continue
+
         print(file.split('.')[0])
         try:
             input = ffmpeg.input(f"media/inputs/{file}",
