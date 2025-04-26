@@ -1,15 +1,13 @@
 import ffmpeg
 import os
 
-from ffmpeg import output, overwrite_output
-
-
 def main(scale: list = [512, 512],
          output_folder: str = "outputs",
          framerate: int = 30,
          codec: str = "libvpx-vp9",
          ss: str = "00:00:00",
          to: str = "00:00:03"):
+
     for file in os.listdir("media/inputs/"):
         print(file.split('.')[0])
         try:
@@ -35,6 +33,7 @@ def main(scale: list = [512, 512],
             print("STDOUT: ", e.stdout)
             print("STDERR: ", e.stderr)
 
+
 def add_text(input, text: str):
     input.filter("drawtext",
           text=text,
@@ -46,5 +45,7 @@ def add_text(input, text: str):
 
     return input
 
+
 if __name__ == "__main__":
     main()
+    
