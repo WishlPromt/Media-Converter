@@ -174,5 +174,5 @@ cython_debug/
 .pypirc
 
 #Input&output folders
-media/inputs/*
-media/outputs/*
+/media/inputs/*
+/media/outputs/*
