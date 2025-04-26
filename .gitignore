@@ -176,5 +176,5 @@ cython_debug/
 #Input&output folders
 /media/inputs/*
 /media/outputs/*
-!/media/inputs/
-!/media/outputs/
+!/media/inputs/.gitkeep
+!/media/outputs/.gitkeep
