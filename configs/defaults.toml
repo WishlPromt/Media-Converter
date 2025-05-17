@@ -1,6 +1,6 @@
 scale_x = 512
 scale_y = -1
-output_folder = 'outputs'
+output_format = 'webm'
 codec = 'libvpx-vp9'
 start_from = '00:00:00'
 end = '00:00:03'
