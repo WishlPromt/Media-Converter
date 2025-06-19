@@ -2,6 +2,12 @@ scale_x = 512
 scale_y = -1
 output_format = 'webm'
 codec = 'libvpx-vp9'
-start_from = '00:00:00'
-end = '00:00:03'
-framerate = 30
+seek_start = '00:00:00'
+to = '00:00:03'
+rate = 30
+
+text_x = 256
+text_y = 256
+font_size = 36
+font_color = 'white'
+font_file = 'NotoSans-Regular.ttf'

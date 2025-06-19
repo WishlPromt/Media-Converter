@@ -3,6 +3,7 @@ import os
 import filetype
 
 from parser import parser
+from media import MediaParams, Media
 
 def check_filetype(file_path: str):
     ext = filetype.guess(file_path)
@@ -16,15 +17,7 @@ def check_filetype(file_path: str):
     else:
         return False
 
-def main(scale,
-         output_format: str,
-         framerate: int,
-         codec: str,
-         ss: str,
-         to: str):
-
-    if not scale:
-        scale = [-1, -1]
+def main(params: MediaParams):
     root_dir = os.getcwd()
 
     for file in os.listdir(f'{root_dir}/media/inputs'):
@@ -36,65 +29,24 @@ def main(scale,
 
         type_of_file = check_filetype(filepath)
         if type_of_file:
+            media = Media(params, file, filepath, root_dir)
             match type_of_file:
                 case 'video':
-                    convert_video(
-                        filepath=filepath,
-                        ss=ss,
-                        to=to,
-                        scale_x=scale[0],
-                        scale_y=scale[1],
-                        root_dir=root_dir,
-                        file=file,
-                        output_format=output_format,
-                        framerate=framerate,
-                        codec=codec
-                    )
+                    convert_media(media, ffmpeg.input(media.filepath,
+                                                      ss=media.params.ss,
+                                                      to=media.params.to))
                 case 'image':
-                    convert_image(filepath=filepath,
-                                  scale_x=scale[0],
-                                  scale_y=scale[1],
-                                  output_format=output_format,
-                                  file=file,
-                                  root_dir=root_dir
-                                  )
+                    convert_media(media, ffmpeg.input(media.filepath))
 
 
-
-
-def convert_video(**params):
-
+def convert_media(media: Media, input: ffmpeg.nodes.FilterableStream):
     try:
-        input = ffmpeg.input(params['filepath'],
-                             ss=params['ss'],
-                             to=params['to'],
-                             )
+        if media.params.text != None:
+            input = media.params.text.add_text(input, media.root_dir)
 
         output = (input
-                  .filter('scale', params['scale_x'], params['scale_y'])
-                  .output(f'{params['root_dir']}/media/outputs/{params['file'].split(".")[0]}.{params['output_format']}',
-                          r=params['framerate'],
-                          vcodec=params['codec'],
-                          **{
-                              'b:v': '500K',
-                              'maxrate': '500K'
-                          }
-                          )
-                  )
-
-        output.run(overwrite_output=True)
-    except ffmpeg.Error as e:
-        print('STDOUT: ', e.stdout)
-        print('STDERR: ', e.stderr)
-
-
-def convert_image(**params):
-    try:
-        input = ffmpeg.input(params['filepath'])
-
-        output = (input
-                  .filter('scale', params['scale_x'], params['scale_y'])
-                  .output(f'{params['root_dir']}/media/outputs/{params['file'].split(".")[0]}.{params['output_format']}',
+                  .filter('scale', media.params.scale[0], media.params.scale[1])
+                  .output(f'{media.root_dir}/media/outputs/{media.filename.split(".")[0]}.{media.params.output_format}',
                           **{
                               'q:v': '5'
                           })
@@ -106,28 +58,19 @@ def convert_image(**params):
         print('STDERR: ', e.stderr)
 
 
-def add_text(input, text: str):
-    input.filter('drawtext',
-          text=text,
-          x=32,
-          y=450,
-          fontsize=48,
-          fontcolor='white'
-          )
-
-    return input
+def add_text(input, text: str, root_dir: str):
+    return input.filter('drawtext',
+                        text=text,
+                        x=200,
+                        y=200,
+                        fontsize=48,
+                        fontcolor='white',
+                        fontfile=f'{root_dir}/fonts/NotoSans-Regular.ttf'
+                        )
 
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    main(
-        scale=[
-            args.scale_x,
-            args.scale_y] if not args.original_scale else False,
-         output_format=args.output_format,
-         codec=args.codec,
-         framerate=args.framerate,
-         ss=args.start_from,
-         to=args.end
-         )
+
+    main(MediaParams(args))
     
