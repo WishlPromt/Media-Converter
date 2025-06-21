@@ -40,14 +40,17 @@ class MediaParams:
     text: Text = None
 
     def __init__(self, args: argparse.Namespace):
-        self.scale = [args.scale_x, args.scale_y] if not args.original_scale else [-1, -1]
+        self.scale = ([args.scale_x, args.scale_y] if not args.vertical_orientation
+                      else [args.scale_y, args.scale_x])\
+            if not args.original_scale else [-1, -1]
+        print(self.scale)
         self.output_format = args.output_format
         self.codec = args.codec
         self.rate = args.rate
         self.ss = args.seek_start
         self.to = args.to
 
-        if args.add_text:
+        if args.text != '':
             print('text added')
             self.text = Text(
                 args.text,

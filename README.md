@@ -19,6 +19,7 @@ It's use ffmpeg for convert
 ### 1. Scale
 - `--scale_x` `-sx` - changes width of the media (512 by default) 
 - `--scale_y` `-sy` - changes height of the media (-1(auto) by default)
+- `--vertical_orientation` `-vo` - swaps width and height
 - `--original_scale` `-os` - don't change scale (don't need in value)
 ### 2. Output
 - `--output_format` `-of` - changes output media format (.webm by default)
@@ -29,7 +30,6 @@ It's use ffmpeg for convert
 - `--to` `-t` - sets the time at which the output media will end (00:00:03 by default)
 
 ### 4. Text
-- `--add_text` `-at` - add text to media (don't need in value)
 - `--text` `-t` - text to be added (none by default)
 - `--text_x` `-tx` - text x position (256 by default)
 - `--text_y` `-ty` - text y position (256 by default)
