@@ -10,7 +10,7 @@ It's use ffmpeg for convert
 2. Run main.py from /src directory
 
 > [!WARNING]
-> Converter need the python-ffmpeg library for work
+> Install libraries from requirements.txt for converter to work
 
 ## Optional parameters
 > [!NOTE]
