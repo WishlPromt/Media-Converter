@@ -20,14 +20,15 @@ It's use ffmpeg for convert
 - `--scale_x` `-sx` - changes width of the media (512 by default) 
 - `--scale_y` `-sy` - changes height of the media (-1(auto) by default)
 - `--vertical_orientation` `-vo` - swaps width and height
-- `--original_scale` `-os` - don't change scale (don't need in value)
+- `--original_scale` `-os` - don't change scale
 ### 2. Output
 - `--output_format` `-of` - changes output media format (.webm by default)
 - `--codec` `-c` - changes codec for encoding media (libvpx-vp9 by default)
 - `--rate` `-r` - changes framerate of media (30 by default)
+- `--video_bitrate` `-vb` - changes bitrate of media video track (350K by default)
 ### 3. Duration (for videos)
 - `--seek_start` `-ss` - sets the time at which the output media will start (00:00:00 by default)
-- `--to` `-t` - sets the time at which the output media will end (00:00:03 by default)
+- `--duration` `-d` - sets the max duration of the video (00:00:03 by default)
 
 ### 4. Text
 - `--text` `-t` - text to be added (none by default)
@@ -42,6 +43,6 @@ It's use ffmpeg for convert
 
 ## Tasks
 - [x] - Convertation
-- [ ] - Edit optional parameters
+- [x] - Edit optional parameters
 - [ ] - building .exe file script
 - [ ] - Add GUI ?

@@ -34,8 +34,9 @@ class MediaParams:
     output_format: str
     rate: int
     codec: str
+    video_bitrate: int
     ss: str
-    to: str
+    duration: str
 
     text: Text = None
 
@@ -47,8 +48,9 @@ class MediaParams:
         self.output_format = args.output_format
         self.codec = args.codec
         self.rate = args.rate
+        self.video_bitrate = args.video_bitrate
         self.ss = args.seek_start
-        self.to = args.to
+        self.duration = args.duration
 
         if args.text != '':
             print('text added')

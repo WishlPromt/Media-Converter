@@ -34,7 +34,7 @@ def main(params: MediaParams):
                 case 'video':
                     convert_media(media, ffmpeg.input(media.filepath,
                                                       ss=media.params.ss,
-                                                      to=media.params.to))
+                                                      t=media.params.duration))
                 case 'image':
                     convert_media(media, ffmpeg.input(media.filepath))
 
@@ -48,7 +48,7 @@ def convert_media(media: Media, input: ffmpeg.nodes.FilterableStream):
                   .filter('scale', media.params.scale[0], media.params.scale[1])
                   .output(f'{media.root_dir}/media/outputs/{media.filename.split(".")[0]}.{media.params.output_format}',
                           **{
-                              'q:v': '5'
+                              'b:v': media.params.video_bitrate
                           })
                   )
 
@@ -56,17 +56,6 @@ def convert_media(media: Media, input: ffmpeg.nodes.FilterableStream):
     except ffmpeg.Error as e:
         print('STDOUT: ', e.stdout)
         print('STDERR: ', e.stderr)
-
-
-def add_text(input, text: str, root_dir: str):
-    return input.filter('drawtext',
-                        text=text,
-                        x=200,
-                        y=200,
-                        fontsize=48,
-                        fontcolor='white',
-                        fontfile=f'{root_dir}/fonts/NotoSans-Regular.ttf'
-                        )
 
 
 if __name__ == '__main__':

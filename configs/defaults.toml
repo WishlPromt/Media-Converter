@@ -2,8 +2,10 @@ scale_x = 512
 scale_y = -1
 output_format = 'webm'
 codec = 'libvpx-vp9'
+video_bitrate = '350K'
 seek_start = '00:00:00'
 to = '00:00:03'
+duration = '00:00:03'
 rate = 30
 
 text_x = 256
